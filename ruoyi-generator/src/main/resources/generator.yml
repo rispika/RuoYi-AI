@@ -8,3 +8,6 @@ gen:
   autoRemovePre: false
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: sys_
+baidu:
+  api_key: 6oolFvvG0BM5clEyDPsg39Eb
+  secret_key: lUsOFROKdnDr4ZrV4VA9CFsbK3wc9bMN

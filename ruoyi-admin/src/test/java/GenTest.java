@@ -5,8 +5,12 @@ import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
 import com.ruoyi.generator.mapper.GenTableMapper;
 import com.ruoyi.generator.service.IGenTableService;
+import com.ruoyi.generator.util.BaiduApplication;
+import com.ruoyi.generator.util.BaiduMessage;
+import com.ruoyi.generator.util.BaiduMessages;
 import com.ruoyi.generator.util.GenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -23,6 +27,28 @@ public class GenTest {
     private IGenTableService genTableService;
     @Resource
     private GenTableMapper genTableMapper;
+    @Resource
+    private BaiduApplication baiduApplication;
+
+    @Test
+    public void askAIForJSON() {
+        BaiduMessages messages = new BaiduMessages();
+        messages.addContent("作为一名DB工程师，你需要帮助我实现一个数据库，请列出可能包含在该数据库中的数据表，并以以下JSON格式告诉我(仅需回复JSON，不需要回复其他语句)： [ { \"tableComment\": \"\", \"tableName\": \"\" }, ... ]");
+        baiduApplication.askAIForJSON(messages);
+    }
+
+    @Test
+    public void askAIForJSONString() {
+        BaiduMessages messages = new BaiduMessages();
+        messages.addContent("作为一名DB工程师，你需要帮助我实现一个数据库，请列出可能包含在该数据库中的数据表，并以以下JSON格式告诉我(仅需回复JSON，不需要回复其他语句)： [ { 'tableComment': '', 'tableName': '' }, ... ]");
+        baiduApplication.askAIForJSONString(messages);
+    }
+
+    @Test
+    public void getAccessToken() {
+        String accessToken = baiduApplication.getAccessToken();
+        System.out.println(accessToken);
+    }
 
     @Test
     public void selectDbTableListByNames() {
