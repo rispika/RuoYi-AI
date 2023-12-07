@@ -33,8 +33,15 @@ public class GenTest {
     @Test
     public void askAIForJSON() {
         BaiduMessages messages = new BaiduMessages();
-        messages.addContent("作为一名DB工程师，你需要帮助我实现一个数据库，请列出可能包含在该数据库中的数据表，并以以下JSON格式告诉我(仅需回复JSON，不需要回复其他语句)： [ { \"tableComment\": \"\", \"tableName\": \"\" }, ... ]");
-        baiduApplication.askAIForJSON(messages);
+        String content = "作为一名DB工程师，你需要帮助我实现一个%s的数据库，请列出可能包含在该数据库中的数据表，并以以下JSON格式告诉我(仅需回复JSON，不需要回复其他语句)： [ { \"tableComment\": \"\", \"tableName\": \"\" }, ... ]";
+        content = String.format(content, "学生管理系统");
+        messages.addContent(content);
+        List<GenTable> tableList = baiduApplication.askAIForJSON(messages, GenTable.class);
+        for (GenTable table : tableList) {
+            GenUtils.initTable(table, "pika");
+            log.info("table:{}", table);
+            genTableMapper.insertGenTable(table);
+        }
     }
 
     @Test

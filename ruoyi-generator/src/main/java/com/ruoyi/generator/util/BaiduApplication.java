@@ -2,6 +2,7 @@ package com.ruoyi.generator.util;
 
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.utils.http.HttpUtils;
 import lombok.Data;
@@ -12,7 +13,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Data
@@ -76,13 +76,13 @@ public class BaiduApplication {
      * @param clazz    克拉兹
      * @return {@link String}
      */
-    public String askAIForJSON(BaiduMessages messages, Type clazz) {
+    public <T> List<T> askAIForJSON(BaiduMessages messages, Class<T> clazz) {
         String jsonStr = askAIForJSONString(messages);
-        return JSON.parseObject(jsonStr, clazz);
+        return JSON.parseArray(jsonStr, clazz);
     }
 
-    public JSONObject askAIForJSON(BaiduMessages messages) {
+    public JSONArray askAIForJSON(BaiduMessages messages) {
         String jsonStr = askAIForJSONString(messages);
-        return JSON.parseObject(jsonStr);
+        return JSON.parseArray(jsonStr);
     }
 }
